@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Rica Tentación</title>
+  <style>
+    :root {
+      --bg1: #7dd3fc;
+      --bg2: #b3ecff;
+      --card: rgba(255,255,255,0.96);
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #facc15;
+      --accent-dark: #a16207;
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --shadow: 0 12px 30px rgba(0,0,0,0.14);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      font-size: 22px;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background-image: url("https://i.postimg.cc/sxJN55Xx/Homer-Big-Chew-The-Simpsons.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 18px 14px 120px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 10px 6px 20px;
+    }
+
+    .title {
+      margin: 0;
+      line-height: 0.95;
+      font-size: clamp(2.4rem, 9vw, 4.2rem);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+      text-shadow: 0 4px 0 var(--accent-dark), 0 8px 18px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      margin: 16px auto 0;
+      max-width: 28ch;
+      color: #ffffff;
+      font-size: clamp(1rem, 3.8vw, 1.3rem);
+      font-weight: 700;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .panel {
+      background: var(--card);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+    }
+
+    .name-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    label {
+      font-size: 0.98rem;
+      font-weight: 800;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      border: 2px solid #d1d5db;
+      border-radius: 16px;
+      padding: 16px 18px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
+    }
+
+    .section-title {
+      margin: 22px 4px 12px;
+      color: #ffffff;
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      font-weight: 900;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.22);
+    }
+
+    .menu-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .item {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .item-head {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .item-name {
+      font-size: clamp(1rem, 3.8vw, 1.28rem);
+      font-weight: 900;
+      line-height: 1.2;
+      flex: 1;
+      padding-right: 8px;
+    }
+
+    .item-price {
+      flex-shrink: 0;
+      background: #f3f4f6;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: clamp(1rem, 3.6vw, 1.2rem);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .controls {
+      display: grid;
+      gap: 12px;
+    }
+
+    .qty-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .qty-label {
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+
+    .stepper {
+      display: inline-flex;
+      align-items: center;
+      background: #f3f4f6;
+      border-radius: 16px;
+      overflow: hidden;
+      min-width: 172px;
+    }
+
+    .stepper button {
+      border: none;
+      background: transparent;
+      width: 52px;
+      height: 52px;
+      font-size: 1.4rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .stepper span {
+      width: 68px;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    .item-total {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      border: none;
+      border-radius: 18px;
+      text-decoration: none;
+      background: var(--green);
+      color: #fff;
+      font-weight: 900;
+      font-size: clamp(1rem, 4vw, 1.15rem);
+      min-height: 62px;
+      padding: 14px 18px;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(34,197,94,0.28);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn:hover {
+      background: var(--green-dark);
+    }
+
+    .summary {
+      margin-top: 22px;
+      background: rgba(255,255,255,0.98);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .summary h3 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .summary-line:last-of-type {
+      border-bottom: none;
+    }
+
+    .grand-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 14px;
+      border-top: 2px dashed #d1d5db;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .helper {
+      margin-top: 14px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .footer {
+      margin-top: 18px;
+      background: var(--card);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .footer strong {
+      display: block;
+      font-size: 1.2rem;
+      margin-top: 6px;
+    }
+
+    .floating-order {
+      position: fixed;
+      right: 14px;
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      width: min(340px, calc(100vw - 28px));
+      background: rgba(255,255,255,0.98);
+      border-radius: 22px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+      padding: 12px;
+      z-index: 999;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
+    .floating-order.hidden {
+      display: none;
+    }
+
+    .floating-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .floating-label {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .floating-total {
+      font-size: 1.08rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .floating-btn {
+      min-height: 56px;
+      border-radius: 16px;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 420px) {
+      html {
+        font-size: 24px;
+      }
+
+      body {
+        padding: 14px 10px 132px;
+      }
+
+      .item, .panel, .summary, .footer {
+        border-radius: 20px;
+        padding: 14px;
+      }
+
+      .stepper {
+        width: 100%;
+      }
+
+      .stepper button,
+      .stepper span {
+        flex: 1;
+      }
+
+      .qty-row {
+        align-items: stretch;
+      }
+
+      .floating-order {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        bottom: calc(10px + env(safe-area-inset-bottom));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <h1 class="title">RICA<br>TENTACIÓN</h1>
+      <p class="subtitle">Las más ricas para pedir desde tu celu</p>
+    </header>
+
+    <section class="panel">
+      <div class="name-wrap">
+        <label for="nombreCliente">¿Cómo es tu nombre?</label>
+        <input id="nombreCliente" type="text" placeholder="Escribí tu nombre" maxlength="40" />
+      </div>
+    </section>
+
+    <h2 class="section-title">🍔 Hamburguesas</h2>
+    <section class="menu-list" id="menuList"></section>
+
+    <section class="summary">
+      <h3>🧾 Tu pedido</h3>
+      <div id="summaryItems"></div>
+      <div class="grand-total">
+        <span>Total</span>
+        <span id="grandTotal">$0</span>
+      </div>
+      <p class="helper">Al tocar el botón se abrirá WhatsApp con tu nombre, el detalle del pedido, el total y el mensaje para pedir alias o método de pago.</p>
+      <button class="btn" id="sendAllBtn" type="button">Pedir por WhatsApp</button>
+    </section>
+
+    <div class="floating-order hidden" id="floatingOrder">
+      <div class="floating-top">
+        <div>
+          <div class="floating-label">Subtotal actual</div>
+          <div class="floating-total" id="floatingTotal">$0</div>
+        </div>
+      </div>
+      <button class="btn floating-btn" id="floatingSendBtn" type="button">Pedir por WhatsApp</button>
+    </div>
+
+    <footer class="footer">
+      📞 Pedidos al
+      <strong>264 462 9971</strong>
+      🚚 Sin cargo de delivery
+    </footer>
+  </main>
+
+  <script>
+    const whatsappNumber = '5492644629971';
+
+    const products = [
+      { id: 'hamb-comun', name: '🍔 Hamburguesa común', price: 3000 },
+      { id: 'hamb-especial', name: '🍔 Hamburguesa especial', price: 4000 },
+      { id: 'hamb-doble', name: '🍔 Hamburguesa especial doble', price: 4500 },
+      { id: 'hamb-triple', name: '🍔 Hamburguesa especial triple', price: 5000 },
+      { id: 'lomo', name: '🥪 Lomo', price: 10000 },
+      { id: 'dos-lomos', name: '🥪 2 Lomos', price: 18000 }
+    ];
+
+    const state = Object.fromEntries(products.map(p => [p.id, 0]));
+
+    const menuList = document.getElementById('menuList');
+    const summaryItems = document.getElementById('summaryItems');
+    const grandTotal = document.getElementById('grandTotal');
+    const sendAllBtn = document.getElementById('sendAllBtn');
+    const floatingSendBtn = document.getElementById('floatingSendBtn');
+    const floatingOrder = document.getElementById('floatingOrder');
+    const floatingTotal = document.getElementById('floatingTotal');
+    const nombreCliente = document.getElementById('nombreCliente');
+
+    function formatPrice(value) {
+      return '$' + value.toLocaleString('es-AR');
+    }
+
+    function renderProducts() {
+      menuList.innerHTML = products.map(product => `
+        <article class="item">
+          <div class="item-head">
+            <div class="item-name">${product.name}</div>
+            <div class="item-price">${formatPrice(product.price)}</div>
+          </div>
+          <div class="controls">
+            <div class="qty-row">
+              <div class="qty-label">Cantidad</div>
+              <div class="stepper">
+                <button type="button" onclick="changeQty('${product.id}', -1)">−</button>
+                <span id="qty-${product.id}">${state[product.id]}</span>
+                <button type="button" onclick="changeQty('${product.id}', 1)">+</button>
+              </div>
+            </div>
+            <div class="item-total">Subtotal: <strong id="subtotal-${product.id}">${formatPrice(product.price * state[product.id])}</strong></div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderSummary() {
+      const selected = products.filter(product => state[product.id] > 0);
+
+      if (selected.length === 0) {
+        summaryItems.innerHTML = '<div class="summary-line"><span>No agregaste productos todavía.</span><span>—</span></div>';
+      } else {
+        summaryItems.innerHTML = selected.map(product => {
+          const qty = state[product.id];
+          const subtotal = qty * product.price;
+          return `
+            <div class="summary-line">
+              <span>${product.name} x${qty}</span>
+              <span>${formatPrice(subtotal)}</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const total = products.reduce((acc, product) => acc + state[product.id] * product.price, 0);
+      grandTotal.textContent = formatPrice(total);
+      floatingTotal.textContent = formatPrice(total);
+
+      if (total > 0) {
+        floatingOrder.classList.remove('hidden');
+      } else {
+        floatingOrder.classList.add('hidden');
+      }
+    }
+
+    window.changeQty = function(id, delta) {
+      state[id] = Math.max(0, state[id] + delta);
+      document.getElementById(`qty-${id}`).textContent = state[id];
+      const product = products.find(p => p.id === id);
+      document.getElementById(`subtotal-${id}`).textContent = formatPrice(product.price * state[id]);
+      renderSummary();
+    };
+
+    function buildWhatsappMessage() {
+      const nombre = nombreCliente.value.trim();
+      const selected = products.filter(product => state[product.id] > 0);
+
+      if (!nombre) {
+        alert('Por favor, escribí tu nombre antes de pedir por WhatsApp.');
+        nombreCliente.focus();
+        return null;
+      }
+
+      if (selected.length === 0) {
+        alert('Elegí al menos un producto antes de pedir por WhatsApp.');
+        return null;
+      }
+
+      const total = selected.reduce((acc, product) => acc + state[product.id] * product.price, 0);
+      const lines = selected.map(product => {
+        const qty = state[product.id];
+        const subtotal = qty * product.price;
+        return `- ${product.name} x${qty} (${formatPrice(subtotal)})`;
+      }).join('\n');
+
+      return [
+        `Hola, mi nombre es ${nombre}.`,
+        'Quiero hacer un pedido de:',
+        lines,
+        '',
+        `Total: ${formatPrice(total)}.`,
+        'Por favor, compartime alias o método de pago para poder pagar.'
+      ].join('\n');
+    }
+
+    function openWhatsappOrder() {
+      const message = buildWhatsappMessage();
+      if (!message) return;
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    sendAllBtn.addEventListener('click', openWhatsappOrder);
+    floatingSendBtn.addEventListener('click', openWhatsappOrder);
+
+    renderProducts();
+    renderSummary();
+  </script>
+</body>
+</html>
